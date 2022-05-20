@@ -1,8 +1,9 @@
 import axios from 'axios';
+import SleekshopClient from './lib/sleekshopClient'
 
-const API_URL: string = 'https://pokeapi.co/api/v2';
+const API_URL = 'https://pokeapi.co/api/v2';
 
-export function getPokemonById(id: number): Promise<object> {
+function getPokemonById(id: number): Promise<object> {
     return new Promise((resolve, reject) => {
         axios
             .get(`${API_URL}/pokemon/${id}`)
@@ -13,4 +14,15 @@ export function getPokemonById(id: number): Promise<object> {
     });
 }
 
-export default { getPokemonById };
+/**
+ * Creates a new Sleekshop Client.
+ */
+const createClient = (
+  sleekshopUrl: string,
+  licenseUsername: string,
+  licensePassword: string,
+): any => {
+  return new SleekshopClient(sleekshopUrl, licenseUsername, licensePassword)
+}
+
+export { createClient, getPokemonById };

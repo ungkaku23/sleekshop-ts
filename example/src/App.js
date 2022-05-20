@@ -1,16 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
 
-import { getPokemonById } from 'sleekshop-js'
+import { getPokemonById, createClient } from "sleekshop-js";
 import { useEffect } from "react";
 
 function App() {
+  const client = createClient(
+    "https://maxundmurat.sleekshop.net/",
+    "maxundmurat_HcDbZqlx83ZKoyjyU7WT",
+    "AJCEU136IYanex2BZRuy"
+  );
 
   useEffect(() => {
-    getPokemonById(2).then((pokemon) => {
+    client.category.test2(2).then((test) => {
+      console.log(test);
+    });
+    client.categories.getPokemonById(100).then((pokemon) => {
       console.log(pokemon.name);
     });
-  }, [])
+  }, [client]);
   return (
     <div className="App">
       <header className="App-header">

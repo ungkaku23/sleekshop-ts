@@ -1,7 +1,7 @@
 import axios from "axios";
 import qs from "qs";
 
-export default class Categories {
+export default class Sessions {
   
   protected restUrl: string;
   protected licenseUsername: string;
@@ -14,12 +14,12 @@ export default class Categories {
   }
 
   /**
-   * Delivers the categories with the parent defined by id.
+   * Delivers a new session.
    *
-   * @param {number} id The id of the parent category.
+   * @param N/A
    * @return {object}
    */
-  public getCategories(id: number) {
+  public getNewSession() {
     return new Promise((resolve, reject) => {
       axios
         .post(
@@ -27,9 +27,7 @@ export default class Categories {
           qs.stringify({
             licence_username: this.licenseUsername,
             licence_password: this.licensePassword,
-            request: "get_categories",
-            id_parent: id,
-            language: "en_EN"
+            request: "get_new_session"
           })
         )
         .then((resp) => {

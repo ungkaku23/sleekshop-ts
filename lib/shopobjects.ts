@@ -183,7 +183,132 @@ export default class ShopObjects {
               attributes: attributes,
               metadata: metadata,
               seo: seo,
-              availability: availability,
+              availability: availability
+            })
+          )
+          .then((resp) => {
+            resolve(jsonFormatter(resp.data));
+          })
+          .catch((err) => {
+            reject(jsonFormatter(err));
+          });
+      });
+  }
+
+  /**
+   * This request can be used to update products. 
+   * The request will be executed as long as an error occurs. In this case the error will be returned.
+   *
+   * @param {number} idProduct The id of the product you want to update.
+   * @param {string} name The name of the new product.
+   * @param {number} shopActive Indicating wether the product is shop_active or not. Use 1 for active an 0 for inactive.
+   * @param {object} attributes A json - array with all attributes you want to set the value. 
+   * @param {object} seo A json - array with all seo - attributes you want to set.
+   * @param {object} metadata A json - array with all metadata you want to set.
+   * @param {object} availability A json - array with all availability - data.
+   * @param {object} categories A json - array containing all categories you want the product to be in.
+   * @return {object}
+   */
+  public updateProduct(
+    idProduct: number,
+    name: string,
+    shopActive: number,
+    attributes: object,
+    seo: object,
+    metadata: object,
+    availability: object) {
+      return new Promise((resolve, reject) => {
+        axios
+          .post(
+            `${this.restUrl}/srv/service/`,
+            qs.stringify({
+              licence_username: this.licenceUsername,
+              licence_password: this.licencePassword,
+              licence_secret_key: this.licenceSecretKey,
+              request: "update_product",
+              id_product: idProduct,
+              name: name,
+              shop_active: shopActive,
+              attributes: attributes,
+              metadata: metadata,
+              seo: seo,
+              availability: availability
+            })
+          )
+          .then((resp) => {
+            resolve(jsonFormatter(resp.data));
+          })
+          .catch((err) => {
+            reject(jsonFormatter(err));
+          });
+      });
+  }
+
+  /**
+   * This request can be used to create variations of products. 
+   * The request will be executed as long as an error occurs. In this case the error will be returned.
+   *
+   * @param {number} idProduct The id of the product you want to update.
+   * @param {string} name The name of the new product.
+   * @param {number} shopActive Indicating wether the product is shop_active or not. Use 1 for active an 0 for inactive.
+   * @param {object} attributes A json - array with all attributes you want to set the value. 
+   * @param {object} seo A json - array with all seo - attributes you want to set.
+   * @param {object} metadata A json - array with all metadata you want to set.
+   * @param {object} availability A json - array with all availability - data.
+   * @param {object} categories A json - array containing all categories you want the product to be in.
+   * @return {object}
+   */
+  public createVariation(
+    idProduct: number,
+    name: string,
+    shopActive: number,
+    attributes: object,
+    seo: object,
+    metadata: object,
+    availability: object) {
+      return new Promise((resolve, reject) => {
+        axios
+          .post(
+            `${this.restUrl}/srv/service/`,
+            qs.stringify({
+              licence_username: this.licenceUsername,
+              licence_password: this.licencePassword,
+              licence_secret_key: this.licenceSecretKey,
+              request: "update_product",
+              id_product: idProduct,
+              name: name,
+              shop_active: shopActive,
+              attributes: attributes,
+              metadata: metadata,
+              seo: seo,
+              availability: availability
+            })
+          )
+          .then((resp) => {
+            resolve(jsonFormatter(resp.data));
+          })
+          .catch((err) => {
+            reject(jsonFormatter(err));
+          });
+      });
+  }
+
+  /**
+   * This request can be used to delete products.
+   *
+   * @param {number} idProduct The id of the product you want to delete.
+   * @return {object}
+   */
+  public deleteProduct(idProduct: number) {
+      return new Promise((resolve, reject) => {
+        axios
+          .post(
+            `${this.restUrl}/srv/service/`,
+            qs.stringify({
+              licence_username: this.licenceUsername,
+              licence_password: this.licencePassword,
+              licence_secret_key: this.licenceSecretKey,
+              request: "delete_product"
             })
           )
           .then((resp) => {

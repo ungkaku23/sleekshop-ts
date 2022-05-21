@@ -24,8 +24,26 @@ import SleekShop from '../index';
 //   expect(data).toMatchObject({ object: "error" });
 // });
 
-it("should mock async function - ShopObjects / create_product", async () => {
+// it("should mock async function - ShopObjects / create_product", async () => {
+//   const sleekShop = new SleekShop("https://neverland.sleekshop.net", "neverland_72tGoDd5Z3qWEiI8LMGD", "oPhX69kW2izJ2YgdNkjr", "aJ5l6s8EqKpvHcG8yD1i");
+//   const data = await sleekShop.shopobjects.createProduct("your-class", "name_new2", 1, {"de_DE":{"name":"Test"}}, {"element_number":"12asddsa3321"}, {"de_DE":{"permalink":"test546576"}}, {"quantity":2,"active":1});
+//   expect(data).toMatchObject({ object: "error" });
+// });
+
+// it("should mock async function - ShopObjects / update_product", async () => {
+//   const sleekShop = new SleekShop("https://neverland.sleekshop.net", "neverland_72tGoDd5Z3qWEiI8LMGD", "oPhX69kW2izJ2YgdNkjr", "aJ5l6s8EqKpvHcG8yD1i");
+//   const data = await sleekShop.shopobjects.updateProduct(163, "name_new2", 1, {"de_DE":{"name":"Test"}}, {"element_number":"12asddsa3321"}, {"de_DE":{"permalink":"test546576"}}, {"quantity":2,"active":1});
+//   expect(data).toMatchObject({ object: "error" });
+// });
+
+// it("should mock async function - ShopObjects / create_variation", async () => {
+//   const sleekShop = new SleekShop("https://neverland.sleekshop.net", "neverland_72tGoDd5Z3qWEiI8LMGD", "oPhX69kW2izJ2YgdNkjr", "aJ5l6s8EqKpvHcG8yD1i");
+//   const data = await sleekShop.shopobjects.createVariation(163, "name_new_variation", 1, {"de_DE":{"name":"Test"}}, {"element_number":"12asddsa3321"}, {"de_DE":{"permalink":"test546576"}}, {"quantity":2,"active":1});
+//   expect(data).toMatchObject({ object: "error" });
+// });
+
+it("should mock async function - ShopObjects / delete_product", async () => {
   const sleekShop = new SleekShop("https://neverland.sleekshop.net", "neverland_72tGoDd5Z3qWEiI8LMGD", "oPhX69kW2izJ2YgdNkjr", "aJ5l6s8EqKpvHcG8yD1i");
-  const data = await sleekShop.shopobjects.createProduct("your-class", "name_new2", 1, {"de_DE":{"name":"Test"}}, {"element_number":"12asddsa3321"}, {"de_DE":{"permalink":"test546576"}}, {"quantity":2,"active":1});
+  const data = await sleekShop.shopobjects.deleteProduct(163);
   expect(data).toMatchObject({ object: "error" });
 });

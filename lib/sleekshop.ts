@@ -1,5 +1,6 @@
 import Categories from "./categories";
 import Sessions from "./sessions";
+import ShopObjects from "./shopobjects";
 
 /**
  * Sleekshop Client.
@@ -24,4 +25,5 @@ export default class SleekShop {
 
   public categories = new Categories(this);
   public sessions = new Sessions(this);
+  public shopobjects = new ShopObjects(this);
 }

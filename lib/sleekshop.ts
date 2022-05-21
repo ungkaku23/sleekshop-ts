@@ -1,4 +1,5 @@
 import Categories from "./categories";
+import Sessions from "./sessions";
 
 /**
  * Sleekshop Client.
@@ -12,12 +13,15 @@ export default class SleekShop {
   constructor(
     protected restUrl: string,
     protected licenseUsername: string,
-    protected licensePassword: string
+    protected licensePassword: string,
+    protected licenceSecretKey: string
   ) {
     if (!restUrl) throw new Error("restUrl is required.");
     if (!licenseUsername) throw new Error("licenseUsername is required.");
     if (!licensePassword) throw new Error("licensePassword is required.");
+    if (!licenceSecretKey) throw new Error("licenceSecretKey is required.");
   }
 
   public categories = new Categories(this);
+  public sessions = new Sessions(this);
 }

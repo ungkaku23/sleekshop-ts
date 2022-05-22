@@ -1,6 +1,11 @@
-import axios from "axios";
-import qs from "qs";
-import { jsonFormatter } from "./helpers";
+import { 
+  jsonFormatter,
+  objectToQueryString
+} from "./helpers";
+
+const { Curl } = require("node-libcurl");
+const curl = new Curl();
+const terminate = curl.close.bind(curl);
 
 export default class Search {
   
@@ -37,32 +42,39 @@ export default class Search {
     order: string,
     leftLimit: number,
     rightLimit: number,
-    neededAttributes: object) {
-      return new Promise((resolve, reject) => {
-        axios
-          .post(
-            `${this.restUrl}/srv/service/`,
-            qs.stringify({
-                licence_username: this.licenceUsername,
-                licence_password: this.licencePassword,
-                request: "search_products",
-                constraint: JSON.stringify(constraint),
-                language: language,
-                country: country,
-                order_columns: JSON.stringify(orderColumns),
-                order: order,
-                left_limit: leftLimit,
-                right_limit: rightLimit,
-                needed_attributes: JSON.stringify(neededAttributes)
-            })
-          )
-          .then((resp) => {
-            resolve(jsonFormatter(resp.data));
-          })
-          .catch((err) => {
-            reject(jsonFormatter(err));
-          });
+    neededAttributes: object
+  ) {
+    return new Promise((resolve, reject) => {
+      curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
+      curl.setOpt(Curl.option.POST, true);
+      curl.setOpt(
+        Curl.option.POSTFIELDS,
+        objectToQueryString({
+          licence_username: this.licenceUsername,
+          licence_password: this.licencePassword,
+          request: "search_products",
+          constraint: JSON.stringify(constraint),
+          language: language,
+          country: country,
+          order_columns: JSON.stringify(orderColumns),
+          order: order,
+          left_limit: leftLimit,
+          right_limit: rightLimit,
+          needed_attributes: JSON.stringify(neededAttributes)
+        })
+      );
+
+      curl.on("end", (statusCode: any, data: any, headers: any) => {
+        resolve(jsonFormatter(data));
       });
+
+      curl.on("error", (statusCode: any, data: any, headers: any) => {
+        terminate();
+        reject(jsonFormatter(data));
+      });
+      
+      curl.perform();
+    });
   }
 
   /**
@@ -84,31 +96,38 @@ export default class Search {
     order: string,
     leftLimit: number,
     rightLimit: number,
-    neededAttributes: object) {
-      return new Promise((resolve, reject) => {
-        axios
-          .post(
-            `${this.restUrl}/srv/service/`,
-            qs.stringify({
-                licence_username: this.licenceUsername,
-                licence_password: this.licencePassword,
-                request: "search_contents",
-                constraint: JSON.stringify(constraint),
-                language: language,
-                order_columns: JSON.stringify(orderColumns),
-                order: order,
-                left_limit: leftLimit,
-                right_limit: rightLimit,
-                needed_attributes: JSON.stringify(neededAttributes)
-            })
-          )
-          .then((resp) => {
-            resolve(jsonFormatter(resp.data));
-          })
-          .catch((err) => {
-            reject(jsonFormatter(err));
-          });
+    neededAttributes: object
+  ) {
+    return new Promise((resolve, reject) => {
+      curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
+      curl.setOpt(Curl.option.POST, true);
+      curl.setOpt(
+        Curl.option.POSTFIELDS,
+        objectToQueryString({
+          licence_username: this.licenceUsername,
+          licence_password: this.licencePassword,
+          request: "search_contents",
+          constraint: JSON.stringify(constraint),
+          language: language,
+          order_columns: JSON.stringify(orderColumns),
+          order: order,
+          left_limit: leftLimit,
+          right_limit: rightLimit,
+          needed_attributes: JSON.stringify(neededAttributes)
+        })
+      );
+
+      curl.on("end", (statusCode: any, data: any, headers: any) => {
+        resolve(jsonFormatter(data));
       });
+
+      curl.on("error", (statusCode: any, data: any, headers: any) => {
+        terminate();
+        reject(jsonFormatter(data));
+      });
+      
+      curl.perform();
+    });
   }
 
   /**
@@ -122,27 +141,34 @@ export default class Search {
   public searchDistinctProducts(
     field: string,
     constraint: object,
-    language: string) {
-      return new Promise((resolve, reject) => {
-        axios
-          .post(
-            `${this.restUrl}/srv/service/`,
-            qs.stringify({
-                licence_username: this.licenceUsername,
-                licence_password: this.licencePassword,
-                request: "search_distinct_products",
-                field: field,
-                constraint: JSON.stringify(constraint),
-                language: language
-            })
-          )
-          .then((resp) => {
-            resolve(jsonFormatter(resp.data));
-          })
-          .catch((err) => {
-            reject(jsonFormatter(err));
-          });
+    language: string
+  ) {
+    return new Promise((resolve, reject) => {
+      curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
+      curl.setOpt(Curl.option.POST, true);
+      curl.setOpt(
+        Curl.option.POSTFIELDS,
+        objectToQueryString({
+          licence_username: this.licenceUsername,
+          licence_password: this.licencePassword,
+          request: "search_distinct_products",
+          field: field,
+          constraint: JSON.stringify(constraint),
+          language: language
+        })
+      );
+
+      curl.on("end", (statusCode: any, data: any, headers: any) => {
+        resolve(jsonFormatter(data));
       });
+
+      curl.on("error", (statusCode: any, data: any, headers: any) => {
+        terminate();
+        reject(jsonFormatter(data));
+      });
+      
+      curl.perform();
+    });
   }
 
   /**
@@ -162,30 +188,37 @@ export default class Search {
     orderColumns: object,
     order: string,
     leftLimit: number,
-    rightLimit: number) {
-      return new Promise((resolve, reject) => {
-        axios
-          .post(
-            `${this.restUrl}/srv/service/`,
-            qs.stringify({
-                licence_username: this.licenceUsername,
-                licence_password: this.licencePassword,
-                request: "search_orders",
-                constraint: JSON.stringify(constraint),
-                language: language,
-                order_columns: JSON.stringify(orderColumns),
-                order: order,
-                left_limit: leftLimit,
-                right_limit: rightLimit
-            })
-          )
-          .then((resp) => {
-            resolve(jsonFormatter(resp.data));
-          })
-          .catch((err) => {
-            reject(jsonFormatter(err));
-          });
+    rightLimit: number
+  ) {
+    return new Promise((resolve, reject) => {
+      curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
+      curl.setOpt(Curl.option.POST, true);
+      curl.setOpt(
+        Curl.option.POSTFIELDS,
+        objectToQueryString({
+          licence_username: this.licenceUsername,
+          licence_password: this.licencePassword,
+          request: "search_orders",
+          constraint: JSON.stringify(constraint),
+          language: language,
+          order_columns: JSON.stringify(orderColumns),
+          order: order,
+          left_limit: leftLimit,
+          right_limit: rightLimit
+        })
+      );
+
+      curl.on("end", (statusCode: any, data: any, headers: any) => {
+        resolve(jsonFormatter(data));
       });
+
+      curl.on("error", (statusCode: any, data: any, headers: any) => {
+        terminate();
+        reject(jsonFormatter(data));
+      });
+      
+      curl.perform();
+    });
   }
 
   /**
@@ -207,31 +240,37 @@ export default class Search {
     order: string,
     leftLimit: number,
     rightLimit: number,
-    neededAttributes: object) {
-      return new Promise((resolve, reject) => {
-        axios
-          .post(
-            `${this.restUrl}/srv/service/`,
-            qs.stringify({
-                licence_username: this.licenceUsername,
-                licence_password: this.licencePassword,
-                request: "search_products",
-                constraint: JSON.stringify(constraint),
-                language: language,
-                order_columns: JSON.stringify(orderColumns),
-                order: order,
-                left_limit: leftLimit,
-                right_limit: rightLimit,
-                needed_attributes: JSON.stringify(neededAttributes)
-            })
-          )
-          .then((resp) => {
-            resolve(jsonFormatter(resp.data));
-          })
-          .catch((err) => {
-            reject(jsonFormatter(err));
-          });
+    neededAttributes: object
+  ) {
+    return new Promise((resolve, reject) => {
+      curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
+      curl.setOpt(Curl.option.POST, true);
+      curl.setOpt(
+        Curl.option.POSTFIELDS,
+        objectToQueryString({
+          licence_username: this.licenceUsername,
+          licence_password: this.licencePassword,
+          request: "search_products",
+          constraint: JSON.stringify(constraint),
+          language: language,
+          order_columns: JSON.stringify(orderColumns),
+          order: order,
+          left_limit: leftLimit,
+          right_limit: rightLimit,
+          needed_attributes: JSON.stringify(neededAttributes)
+        })
+      );
+
+      curl.on("end", (statusCode: any, data: any, headers: any) => {
+        resolve(jsonFormatter(data));
       });
+
+      curl.on("error", (statusCode: any, data: any, headers: any) => {
+        terminate();
+        reject(jsonFormatter(data));
+      });
+      
+      curl.perform();
+    });
   }
-  
 }

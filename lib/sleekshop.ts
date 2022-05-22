@@ -2,7 +2,8 @@ import Cart from "./cart";
 import Categories from "./categories";
 import Search from "./search";
 import Sessions from "./sessions";
-import ShopObjects from "./shopobjects";
+// import ShopObjects from "./shopobjects";
+import User from "./user";
 
 /**
  * Sleekshop Client.
@@ -15,19 +16,20 @@ export default class SleekShop {
 
   constructor(
     protected restUrl: string,
-    protected licenseUsername: string,
-    protected licensePassword: string,
+    protected licenceUsername: string,
+    protected licencePassword: string,
     protected licenceSecretKey: string
   ) {
     if (!restUrl) throw new Error("restUrl is required.");
-    if (!licenseUsername) throw new Error("licenseUsername is required.");
-    if (!licensePassword) throw new Error("licensePassword is required.");
+    if (!licenceUsername) throw new Error("licenceUsername is required.");
+    if (!licencePassword) throw new Error("licencePassword is required.");
     if (!licenceSecretKey) throw new Error("licenceSecretKey is required.");
   }
 
   public categories = new Categories(this);
   public sessions = new Sessions(this);
-  public shopobjects = new ShopObjects(this);
+  // public shopobjects = new ShopObjects(this);
   public search = new Search(this);
   public cart = new Cart(this);
+  public user = new User(this);
 }

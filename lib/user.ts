@@ -7,25 +7,31 @@ const { Curl } = require("node-libcurl");
 const curl = new Curl();
 const terminate = curl.close.bind(curl);
 
-export default class Sessions {
+export default class User {
   
   protected restUrl: string;
   protected licenceUsername: string;
   protected licencePassword: string;
+  protected licenceSecretKey: string;
 
   constructor(parentObj: any) {
     this.restUrl = parentObj.restUrl;
     this.licenceUsername = parentObj.licenceUsername;
     this.licencePassword = parentObj.licencePassword;
+    this.licenceSecretKey = parentObj.licenceSecretKey;
   }
 
   /**
-   * Delivers a new session.
+   * Is used to create user - accounts via API.
    *
-   * @param N/A
+   * @param {string} language The language of the user.
+   * @param {object} args The data of the user you want to register.
    * @return {object}
    */
-  public getNewSession() {
+  public registerUser(
+    language: string,
+    args: object
+  ) {
     return new Promise((resolve, reject) => {
       curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
       curl.setOpt(Curl.option.POST, true);
@@ -34,7 +40,9 @@ export default class Sessions {
         objectToQueryString({
           licence_username: this.licenceUsername,
           licence_password: this.licencePassword,
-          request: "get_new_session"
+          request: "register_user",
+          language: language,
+          args: JSON.stringify(args)
         })
       );
 

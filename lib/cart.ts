@@ -1,6 +1,11 @@
-import axios from "axios";
-import qs from "qs";
-import { jsonFormatter } from "./helpers";
+import { 
+  jsonFormatter,
+  objectToQueryString
+} from "./helpers";
+
+const { Curl } = require("node-libcurl");
+const curl = new Curl();
+const terminate = curl.close.bind(curl);
 
 export default class Cart {
   
@@ -43,35 +48,42 @@ export default class Cart {
     descriptionField: string,
     language: string,
     country: string,
-    attributes: object) {
-      return new Promise((resolve, reject) => {
-        axios
-          .post(
-            `${this.restUrl}/srv/service/`,
-            qs.stringify({
-                licence_username: this.licenceUsername,
-                licence_password: this.licencePassword,
-                request: "add_to_cart",
-                session: session,
-                id_shopobject: idShopObject,
-                element_type: elementType,
-                id_parent_element: idParentElement,
-                quantity: quantity,
-                price_field: priceField,
-                name_field: nameField,
-                description_field: descriptionField,
-                language: language,
-                country: country,
-                attributes: JSON.stringify(attributes)
-            })
-          )
-          .then((resp) => {
-            resolve(jsonFormatter(resp.data));
-          })
-          .catch((err) => {
-            reject(jsonFormatter(err));
-          });
+    attributes: object
+  ) {
+    return new Promise((resolve, reject) => {
+      curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
+      curl.setOpt(Curl.option.POST, true);
+      curl.setOpt(
+        Curl.option.POSTFIELDS,
+        objectToQueryString({
+          licence_username: this.licenceUsername,
+          licence_password: this.licencePassword,
+          request: "add_to_cart",
+          session: session,
+          id_shopobject: idShopObject,
+          element_type: elementType,
+          id_parent_element: idParentElement,
+          quantity: quantity,
+          price_field: priceField,
+          name_field: nameField,
+          description_field: descriptionField,
+          language: language,
+          country: country,
+          attributes: JSON.stringify(attributes)
+        })
+      );
+
+      curl.on("end", (statusCode: any, data: any, headers: any) => {
+        resolve(jsonFormatter(data));
       });
+
+      curl.on("error", (statusCode: any, data: any, headers: any) => {
+        terminate();
+        reject(jsonFormatter(data));
+      });
+      
+      curl.perform();
+    });
   }
 
   /**
@@ -83,26 +95,33 @@ export default class Cart {
    */
   public subFromCart(
     session: string,
-    idElement: number) {
-      return new Promise((resolve, reject) => {
-        axios
-          .post(
-            `${this.restUrl}/srv/service/`,
-            qs.stringify({
-                licence_username: this.licenceUsername,
-                licence_password: this.licencePassword,
-                request: "sub_from_cart",
-                session: session,
-                id_element: idElement
-            })
-          )
-          .then((resp) => {
-            resolve(jsonFormatter(resp.data));
-          })
-          .catch((err) => {
-            reject(jsonFormatter(err));
-          });
+    idElement: number
+  ) {
+    return new Promise((resolve, reject) => {
+      curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
+      curl.setOpt(Curl.option.POST, true);
+      curl.setOpt(
+        Curl.option.POSTFIELDS,
+        objectToQueryString({
+          licence_username: this.licenceUsername,
+          licence_password: this.licencePassword,
+          request: "sub_from_cart",
+          session: session,
+          id_element: idElement
+        })
+      );
+
+      curl.on("end", (statusCode: any, data: any, headers: any) => {
+        resolve(jsonFormatter(data));
       });
+
+      curl.on("error", (statusCode: any, data: any, headers: any) => {
+        terminate();
+        reject(jsonFormatter(data));
+      });
+      
+      curl.perform();
+    });
   }
 
   /**
@@ -114,26 +133,33 @@ export default class Cart {
    */
   public delFromCart(
     session: string,
-    idElement: number) {
-      return new Promise((resolve, reject) => {
-        axios
-          .post(
-            `${this.restUrl}/srv/service/`,
-            qs.stringify({
-                licence_username: this.licenceUsername,
-                licence_password: this.licencePassword,
-                request: "del_from_cart",
-                session: session,
-                id_element: idElement
-            })
-          )
-          .then((resp) => {
-            resolve(jsonFormatter(resp.data));
-          })
-          .catch((err) => {
-            reject(jsonFormatter(err));
-          });
+    idElement: number
+  ) {
+    return new Promise((resolve, reject) => {
+      curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
+      curl.setOpt(Curl.option.POST, true);
+      curl.setOpt(
+        Curl.option.POSTFIELDS,
+        objectToQueryString({
+          licence_username: this.licenceUsername,
+          licence_password: this.licencePassword,
+          request: "del_from_cart",
+          session: session,
+          id_element: idElement
+        })
+      );
+
+      curl.on("end", (statusCode: any, data: any, headers: any) => {
+        resolve(jsonFormatter(data));
       });
+
+      curl.on("error", (statusCode: any, data: any, headers: any) => {
+        terminate();
+        reject(jsonFormatter(data));
+      });
+      
+      curl.perform();
+    });
   }
 
   /**
@@ -143,24 +169,30 @@ export default class Cart {
    * @return {object}
    */
   public clearCart(session: string) {
-      return new Promise((resolve, reject) => {
-        axios
-          .post(
-            `${this.restUrl}/srv/service/`,
-            qs.stringify({
-                licence_username: this.licenceUsername,
-                licence_password: this.licencePassword,
-                request: "clear_cart",
-                session: session
-            })
-          )
-          .then((resp) => {
-            resolve(jsonFormatter(resp.data));
-          })
-          .catch((err) => {
-            reject(jsonFormatter(err));
-          });
+    return new Promise((resolve, reject) => {
+      curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
+      curl.setOpt(Curl.option.POST, true);
+      curl.setOpt(
+        Curl.option.POSTFIELDS,
+        objectToQueryString({
+          licence_username: this.licenceUsername,
+          licence_password: this.licencePassword,
+          request: "clear_cart",
+          session: session
+        })
+      );
+
+      curl.on("end", (statusCode: any, data: any, headers: any) => {
+        resolve(jsonFormatter(data));
       });
+
+      curl.on("error", (statusCode: any, data: any, headers: any) => {
+        terminate();
+        reject(jsonFormatter(data));
+      });
+      
+      curl.perform();
+    });
   }
 
   /**
@@ -171,22 +203,28 @@ export default class Cart {
    */
   public getCart(session: string) {
     return new Promise((resolve, reject) => {
-      axios
-        .post(
-          `${this.restUrl}/srv/service/`,
-          qs.stringify({
-              licence_username: this.licenceUsername,
-              licence_password: this.licencePassword,
-              request: "get_cart",
-              session: session
-          })
-        )
-        .then((resp) => {
-          resolve(jsonFormatter(resp.data));
+      curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
+      curl.setOpt(Curl.option.POST, true);
+      curl.setOpt(
+        Curl.option.POSTFIELDS,
+        objectToQueryString({
+          licence_username: this.licenceUsername,
+          licence_password: this.licencePassword,
+          request: "get_cart",
+          session: session
         })
-        .catch((err) => {
-          reject(jsonFormatter(err));
-        });
+      );
+
+      curl.on("end", (statusCode: any, data: any, headers: any) => {
+        resolve(jsonFormatter(data));
+      });
+
+      curl.on("error", (statusCode: any, data: any, headers: any) => {
+        terminate();
+        reject(jsonFormatter(data));
+      });
+      
+      curl.perform();
     });
   }
 }

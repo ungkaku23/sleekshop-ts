@@ -42,8 +42,8 @@ import SleekShop from '../index';
 //   expect(data).toMatchObject({ object: "error" });
 // });
 
-it("should mock async function - ShopObjects / delete_product", async () => {
-  const sleekShop = new SleekShop("https://neverland.sleekshop.net", "neverland_72tGoDd5Z3qWEiI8LMGD", "oPhX69kW2izJ2YgdNkjr", "aJ5l6s8EqKpvHcG8yD1i");
-  const data = await sleekShop.shopobjects.deleteProduct(163);
-  expect(data).toMatchObject({ object: "error" });
-});
+// it("should mock async function - ShopObjects / delete_product", async () => {
+//   const sleekShop = new SleekShop("https://neverland.sleekshop.net", "neverland_72tGoDd5Z3qWEiI8LMGD", "oPhX69kW2izJ2YgdNkjr", "aJ5l6s8EqKpvHcG8yD1i");
+//   const data = await sleekShop.shopobjects.deleteProduct(163);
+//   expect(data).toMatchObject({ object: "error" });
+// });

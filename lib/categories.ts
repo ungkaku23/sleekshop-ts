@@ -1,6 +1,11 @@
-import axios from "axios";
-import qs from "qs";
-import { jsonFormatter } from "./helpers";
+import { 
+  jsonFormatter,
+  objectToQueryString
+} from "./helpers";
+
+const { Curl } = require("node-libcurl");
+const curl = new Curl();
+const terminate = curl.close.bind(curl);
 
 export default class Categories {
   
@@ -25,23 +30,29 @@ export default class Categories {
    */
   public getCategories(id: number, language: string) {
     return new Promise((resolve, reject) => {
-      axios
-        .post(
-          `${this.restUrl}/srv/service/`,
-          qs.stringify({
-            licence_username: this.licenceUsername,
-            licence_password: this.licencePassword,
-            request: "get_categories",
-            id_parent: id,
-            language: language
-          })
-        )
-        .then((resp) => {
-          resolve(jsonFormatter(resp.data));
+      curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
+      curl.setOpt(Curl.option.POST, true);
+      curl.setOpt(
+        Curl.option.POSTFIELDS,
+        objectToQueryString({
+          licence_username: this.licenceUsername,
+          licence_password: this.licencePassword,
+          request: "get_categories",
+          id_parent: id,
+          language: language
         })
-        .catch((err) => {
-          reject(jsonFormatter(err));
-        });
+      );
+
+      curl.on("end", (statusCode: any, data: any, headers: any) => {
+        resolve(jsonFormatter(data));
+      });
+
+      curl.on("error", (statusCode: any, data: any, headers: any) => {
+        terminate();
+        reject(jsonFormatter(data));
+      });
+      
+      curl.perform();
     });
   }
 
@@ -66,32 +77,39 @@ export default class Categories {
     order: string,
     leftLimit: number,
     rightLimit: number,
-    neededAttributes: object) {
-      return new Promise((resolve, reject) => {
-        axios
-          .post(
-            `${this.restUrl}/srv/service/`,
-            qs.stringify({
-              licence_username: this.licenceUsername,
-              licence_password: this.licencePassword,
-              request: "get_products_in_category",
-              id_category: idCategory,
-              language: language,
-              country: country,
-              order_column: orderColumn,
-              order: order,
-              left_limit: leftLimit,
-              right_limit: rightLimit,
-              needed_attributes: JSON.stringify(neededAttributes)
-            })
-          )
-          .then((resp) => {
-            resolve(jsonFormatter(resp.data));
-          })
-          .catch((err) => {
-            reject(jsonFormatter(err));
-          });
+    neededAttributes: object
+  ) {
+    return new Promise((resolve, reject) => {
+      curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
+      curl.setOpt(Curl.option.POST, true);
+      curl.setOpt(
+        Curl.option.POSTFIELDS,
+        objectToQueryString({
+          licence_username: this.licenceUsername,
+          licence_password: this.licencePassword,
+          request: "get_products_in_category",
+          id_category: idCategory,
+          language: language,
+          country: country,
+          order_column: orderColumn,
+          order: order,
+          left_limit: leftLimit,
+          right_limit: rightLimit,
+          needed_attributes: JSON.stringify(neededAttributes)
+        })
+      );
+
+      curl.on("end", (statusCode: any, data: any, headers: any) => {
+        resolve(jsonFormatter(data));
       });
+
+      curl.on("error", (statusCode: any, data: any, headers: any) => {
+        terminate();
+        reject(jsonFormatter(data));
+      });
+      
+      curl.perform();
+    });
   }
 
   /**
@@ -113,31 +131,38 @@ export default class Categories {
     order: string,
     leftLimit: number,
     rightLimit: number,
-    neededAttributes: object) {
-      return new Promise((resolve, reject) => {
-        axios
-          .post(
-            `${this.restUrl}/srv/service/`,
-            qs.stringify({
-                licence_username: this.licenceUsername,
-                licence_password: this.licencePassword,
-                request: "get_products_in_category",
-                id_category: idCategory,
-                language: language,
-                order_column: orderColumn,
-                order: order,
-                left_limit: leftLimit,
-                right_limit: rightLimit,
-                needed_attributes: JSON.stringify(neededAttributes)
-            })
-          )
-          .then((resp) => {
-            resolve(jsonFormatter(resp.data));
-          })
-          .catch((err) => {
-            reject(jsonFormatter(err));
-          });
+    neededAttributes: object
+  ) {
+    return new Promise((resolve, reject) => {
+      curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
+      curl.setOpt(Curl.option.POST, true);
+      curl.setOpt(
+        Curl.option.POSTFIELDS,
+        objectToQueryString({
+          licence_username: this.licenceUsername,
+          licence_password: this.licencePassword,
+          request: "get_products_in_category",
+          id_category: idCategory,
+          language: language,
+          order_column: orderColumn,
+          order: order,
+          left_limit: leftLimit,
+          right_limit: rightLimit,
+          needed_attributes: JSON.stringify(neededAttributes)
+        })
+      );
+
+      curl.on("end", (statusCode: any, data: any, headers: any) => {
+        resolve(jsonFormatter(data));
       });
+
+      curl.on("error", (statusCode: any, data: any, headers: any) => {
+        terminate();
+        reject(jsonFormatter(data));
+      });
+      
+      curl.perform();
+    });
   }
 
   /**
@@ -161,32 +186,39 @@ export default class Categories {
     order: string,
     leftLimit: number,
     rightLimit: number,
-    neededAttributes: object) {
-      return new Promise((resolve, reject) => {
-        axios
-          .post(
-            `${this.restUrl}/srv/service/`,
-            qs.stringify({
-                licence_username: this.licenceUsername,
-                licence_password: this.licencePassword,
-                request: "get_shopobjects_in_category",
-                id_category: idCategory,
-                language: language,
-                country: country,
-                order_column: orderColumn,
-                order: order,
-                left_limit: leftLimit,
-                right_limit: rightLimit,
-                needed_attributes: JSON.stringify(neededAttributes)
-            })
-          )
-          .then((resp) => {
-            resolve(jsonFormatter(resp.data));
-          })
-          .catch((err) => {
-            reject(jsonFormatter(err));
-          });
+    neededAttributes: object
+  ) {
+    return new Promise((resolve, reject) => {
+      curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
+      curl.setOpt(Curl.option.POST, true);
+      curl.setOpt(
+        Curl.option.POSTFIELDS,
+        objectToQueryString({
+          licence_username: this.licenceUsername,
+          licence_password: this.licencePassword,
+          request: "get_shopobjects_in_category",
+          id_category: idCategory,
+          language: language,
+          country: country,
+          order_column: orderColumn,
+          order: order,
+          left_limit: leftLimit,
+          right_limit: rightLimit,
+          needed_attributes: JSON.stringify(neededAttributes)
+        })
+      );
+
+      curl.on("end", (statusCode: any, data: any, headers: any) => {
+        resolve(jsonFormatter(data));
       });
+
+      curl.on("error", (statusCode: any, data: any, headers: any) => {
+        terminate();
+        reject(jsonFormatter(data));
+      });
+      
+      curl.perform();
+    });
   }
 
   /**
@@ -210,32 +242,39 @@ export default class Categories {
     order: string,
     leftLimit: number,
     rightLimit: number,
-    neededAttributes: object) {
-      return new Promise((resolve, reject) => {
-        axios
-          .post(
-            `${this.restUrl}/srv/service/`,
-            qs.stringify({
-                licence_username: this.licenceUsername,
-                licence_password: this.licencePassword,
-                request: "dump_category",
-                id_category: idCategory,
-                language: language,
-                country: country,
-                order_column: orderColumn,
-                order: order,
-                left_limit: leftLimit,
-                right_limit: rightLimit,
-                needed_attributes: JSON.stringify(neededAttributes)
-            })
-          )
-          .then((resp) => {
-            resolve(jsonFormatter(resp.data));
-          })
-          .catch((err) => {
-            reject(jsonFormatter(err));
-          });
+    neededAttributes: object)
+   {
+    return new Promise((resolve, reject) => {
+      curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
+      curl.setOpt(Curl.option.POST, true);
+      curl.setOpt(
+        Curl.option.POSTFIELDS,
+        objectToQueryString({
+          licence_username: this.licenceUsername,
+          licence_password: this.licencePassword,
+          request: "dump_category",
+          id_category: idCategory,
+          language: language,
+          country: country,
+          order_column: orderColumn,
+          order: order,
+          left_limit: leftLimit,
+          right_limit: rightLimit,
+          needed_attributes: JSON.stringify(neededAttributes)
+        })
+      );
+
+      curl.on("end", (statusCode: any, data: any, headers: any) => {
+        resolve(jsonFormatter(data));
       });
+
+      curl.on("error", (statusCode: any, data: any, headers: any) => {
+        terminate();
+        reject(jsonFormatter(data));
+      });
+      
+      curl.perform();
+    });
   }
 
   /**
@@ -257,31 +296,38 @@ export default class Categories {
     order: string,
     leftLimit: number,
     rightLimit: number,
-    neededAttributes: object) {
-      return new Promise((resolve, reject) => {
-        axios
-          .post(
-            `${this.restUrl}/srv/service/`,
-            qs.stringify({
-                licence_username: this.licenceUsername,
-                licence_password: this.licencePassword,
-                request: "seo_get_products_in_category",
-                permalink: permalink,
-                country: country,
-                order_column: orderColumn,
-                order: order,
-                left_limit: leftLimit,
-                right_limit: rightLimit,
-                needed_attributes: JSON.stringify(neededAttributes)
-            })
-          )
-          .then((resp) => {
-            resolve(jsonFormatter(resp.data));
-          })
-          .catch((err) => {
-            reject(jsonFormatter(err));
-          });
+    neededAttributes: object
+  ) {
+    return new Promise((resolve, reject) => {
+      curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
+      curl.setOpt(Curl.option.POST, true);
+      curl.setOpt(
+        Curl.option.POSTFIELDS,
+        objectToQueryString({
+          licence_username: this.licenceUsername,
+          licence_password: this.licencePassword,
+          request: "seo_get_products_in_category",
+          permalink: permalink,
+          country: country,
+          order_column: orderColumn,
+          order: order,
+          left_limit: leftLimit,
+          right_limit: rightLimit,
+          needed_attributes: JSON.stringify(neededAttributes)
+        })
+      );
+
+      curl.on("end", (statusCode: any, data: any, headers: any) => {
+        resolve(jsonFormatter(data));
       });
+
+      curl.on("error", (statusCode: any, data: any, headers: any) => {
+        terminate();
+        reject(jsonFormatter(data));
+      });
+      
+      curl.perform();
+    });
   }
 
   /**
@@ -301,30 +347,37 @@ export default class Categories {
     order: string,
     leftLimit: number,
     rightLimit: number,
-    neededAttributes: object) {
-      return new Promise((resolve, reject) => {
-        axios
-          .post(
-            `${this.restUrl}/srv/service/`,
-            qs.stringify({
-                licence_username: this.licenceUsername,
-                licence_password: this.licencePassword,
-                request: "seo_get_contents_in_category",
-                permalink: permalink,
-                order_column: orderColumn,
-                order: order,
-                left_limit: leftLimit,
-                right_limit: rightLimit,
-                needed_attributes: JSON.stringify(neededAttributes)
-            })
-          )
-          .then((resp) => {
-            resolve(jsonFormatter(resp.data));
-          })
-          .catch((err) => {
-            reject(jsonFormatter(err));
-          });
+    neededAttributes: object
+  ) {
+    return new Promise((resolve, reject) => {
+      curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
+      curl.setOpt(Curl.option.POST, true);
+      curl.setOpt(
+        Curl.option.POSTFIELDS,
+        objectToQueryString({
+          licence_username: this.licenceUsername,
+          licence_password: this.licencePassword,
+          request: "seo_get_contents_in_category",
+          permalink: permalink,
+          order_column: orderColumn,
+          order: order,
+          left_limit: leftLimit,
+          right_limit: rightLimit,
+          needed_attributes: JSON.stringify(neededAttributes)
+        })
+      );
+
+      curl.on("end", (statusCode: any, data: any, headers: any) => {
+        resolve(jsonFormatter(data));
       });
+
+      curl.on("error", (statusCode: any, data: any, headers: any) => {
+        terminate();
+        reject(jsonFormatter(data));
+      });
+      
+      curl.perform();
+    });
   }
 
   /**
@@ -346,31 +399,38 @@ export default class Categories {
     order: string,
     leftLimit: number,
     rightLimit: number,
-    neededAttributes: object) {
-      return new Promise((resolve, reject) => {
-        axios
-          .post(
-            `${this.restUrl}/srv/service/`,
-            qs.stringify({
-                licence_username: this.licenceUsername,
-                licence_password: this.licencePassword,
-                request: "seo_get_shopobjects_in_category",
-                permalink: permalink,
-                country: country,
-                order_column: orderColumn,
-                order: order,
-                left_limit: leftLimit,
-                right_limit: rightLimit,
-                needed_attributes: JSON.stringify(neededAttributes)
-            })
-          )
-          .then((resp) => {
-            resolve(jsonFormatter(resp.data));
-          })
-          .catch((err) => {
-            reject(jsonFormatter(err));
-          });
+    neededAttributes: object
+  ) {
+    return new Promise((resolve, reject) => {
+      curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
+      curl.setOpt(Curl.option.POST, true);
+      curl.setOpt(
+        Curl.option.POSTFIELDS,
+        objectToQueryString({
+          licence_username: this.licenceUsername,
+          licence_password: this.licencePassword,
+          request: "seo_get_shopobjects_in_category",
+          permalink: permalink,
+          country: country,
+          order_column: orderColumn,
+          order: order,
+          left_limit: leftLimit,
+          right_limit: rightLimit,
+          needed_attributes: JSON.stringify(neededAttributes)
+        })
+      );
+
+      curl.on("end", (statusCode: any, data: any, headers: any) => {
+        resolve(jsonFormatter(data));
       });
+
+      curl.on("error", (statusCode: any, data: any, headers: any) => {
+        terminate();
+        reject(jsonFormatter(data));
+      });
+      
+      curl.perform();
+    });
   }
 
   /**
@@ -388,30 +448,37 @@ export default class Categories {
     name: string,
     labels: object,
     attributes: object,
-    seo: object) {
-      return new Promise((resolve, reject) => {
-        axios
-          .post(
-            `${this.restUrl}/srv/service/`,
-            qs.stringify({
-                licence_username: this.licenceUsername,
-                licence_password: this.licencePassword,
-                licence_secret_key: this.licenceSecretKey,
-                request: "create_category",
-                id_parent: idParent,
-                name: name,
-                labels: JSON.stringify(labels),
-                attributes: JSON.stringify(attributes),
-                seo: JSON.stringify(seo)
-            })
-          )
-          .then((resp) => {
-            resolve(jsonFormatter(resp.data));
-          })
-          .catch((err) => {
-            reject(jsonFormatter(err));
-          });
+    seo: object
+  ) {
+    return new Promise((resolve, reject) => {
+      curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
+      curl.setOpt(Curl.option.POST, true);
+      curl.setOpt(
+        Curl.option.POSTFIELDS,
+        objectToQueryString({
+          licence_username: this.licenceUsername,
+          licence_password: this.licencePassword,
+          licence_secret_key: this.licenceSecretKey,
+          request: "create_category",
+          id_parent: idParent,
+          name: name,
+          labels: JSON.stringify(labels),
+          attributes: JSON.stringify(attributes),
+          seo: JSON.stringify(seo)
+        })
+      );
+
+      curl.on("end", (statusCode: any, data: any, headers: any) => {
+        resolve(jsonFormatter(data));
       });
+
+      curl.on("error", (statusCode: any, data: any, headers: any) => {
+        terminate();
+        reject(jsonFormatter(data));
+      });
+      
+      curl.perform();
+    });
   }
 
   /**
@@ -429,30 +496,37 @@ export default class Categories {
     name: string,
     labels: object,
     attributes: object,
-    seo: object) {
-      return new Promise((resolve, reject) => {
-        axios
-          .post(
-            `${this.restUrl}/srv/service/`,
-            qs.stringify({
-                licence_username: this.licenceUsername,
-                licence_password: this.licencePassword,
-                licence_secret_key: this.licenceSecretKey,
-                request: "update_category",
-                id_category: idCategory,
-                name: name,
-                labels: JSON.stringify(labels),
-                attributes: JSON.stringify(attributes),
-                seo: JSON.stringify(seo)
-            })
-          )
-          .then((resp) => {
-            resolve(jsonFormatter(resp.data));
-          })
-          .catch((err) => {
-            reject(jsonFormatter(err));
-          });
+    seo: object
+  ) {
+    return new Promise((resolve, reject) => {
+      curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
+      curl.setOpt(Curl.option.POST, true);
+      curl.setOpt(
+        Curl.option.POSTFIELDS,
+        objectToQueryString({
+          licence_username: this.licenceUsername,
+          licence_password: this.licencePassword,
+          licence_secret_key: this.licenceSecretKey,
+          request: "update_category",
+          id_category: idCategory,
+          name: name,
+          labels: JSON.stringify(labels),
+          attributes: JSON.stringify(attributes),
+          seo: JSON.stringify(seo)
+        })
+      );
+
+      curl.on("end", (statusCode: any, data: any, headers: any) => {
+        resolve(jsonFormatter(data));
       });
+
+      curl.on("error", (statusCode: any, data: any, headers: any) => {
+        terminate();
+        reject(jsonFormatter(data));
+      });
+      
+      curl.perform();
+    });
   }
 
   /**
@@ -465,23 +539,29 @@ export default class Categories {
    */
   public deleteCategory(idCategory: number) {
     return new Promise((resolve, reject) => {
-      axios
-        .post(
-          `${this.restUrl}/srv/service/`,
-          qs.stringify({
-            licence_username: this.licenceUsername,
-            licence_password: this.licencePassword,
-            licence_secret_key: this.licenceSecretKey,
-            request: "delete_category",
-            id_category: idCategory
-          })
-        )
-        .then((resp) => {
-          resolve(resp.data);
+      curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
+      curl.setOpt(Curl.option.POST, true);
+      curl.setOpt(
+        Curl.option.POSTFIELDS,
+        objectToQueryString({
+          licence_username: this.licenceUsername,
+          licence_password: this.licencePassword,
+          licence_secret_key: this.licenceSecretKey,
+          request: "delete_category",
+          id_category: idCategory
         })
-        .catch((err) => {
-          reject(err)
-        });
+      );
+
+      curl.on("end", (statusCode: any, data: any, headers: any) => {
+        resolve(jsonFormatter(data));
+      });
+
+      curl.on("error", (statusCode: any, data: any, headers: any) => {
+        terminate();
+        reject(jsonFormatter(data));
+      });
+      
+      curl.perform();
     });
   }
 }

@@ -2,7 +2,7 @@ import Cart from "./cart";
 import Categories from "./categories";
 import Search from "./search";
 import Sessions from "./sessions";
-// import ShopObjects from "./shopobjects";
+import ShopObjects from "./shopobjects";
 import User from "./user";
 
 /**
@@ -28,7 +28,7 @@ export default class SleekShop {
 
   public categories = new Categories(this);
   public sessions = new Sessions(this);
-  // public shopobjects = new ShopObjects(this);
+  public shopobjects = new ShopObjects(this);
   public search = new Search(this);
   public cart = new Cart(this);
   public user = new User(this);

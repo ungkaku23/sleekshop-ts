@@ -1,6 +1,11 @@
-import axios from "axios";
-import qs from "qs";
-import { jsonFormatter } from "./helpers";
+import { 
+  jsonFormatter,
+  objectToQueryString
+} from "./helpers";
+
+const { Curl } = require("node-libcurl");
+const curl = new Curl();
+const terminate = curl.close.bind(curl);
 
 export default class ShopObjects {
   
@@ -29,28 +34,35 @@ export default class ShopObjects {
     idProduct: number,
     language: string,
     country: string,
-    neededAttributes: object) {
-      return new Promise((resolve, reject) => {
-        axios
-          .post(
-            `${this.restUrl}/srv/service/`,
-            qs.stringify({
-              licence_username: this.licenceUsername,
-              licence_password: this.licencePassword,
-              request: "get_product_details",
-              id_product: idProduct,
-              language: language,
-              country: country,
-              needed_attributes: JSON.stringify(neededAttributes)
-            })
-          )
-          .then((resp) => {
-            resolve(jsonFormatter(resp.data));
-          })
-          .catch((err) => {
-            reject(jsonFormatter(err));
-          });
+    neededAttributes: object
+  ) {
+    return new Promise((resolve, reject) => {
+      curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
+      curl.setOpt(Curl.option.POST, true);
+      curl.setOpt(
+        Curl.option.POSTFIELDS,
+        objectToQueryString({
+          licence_username: this.licenceUsername,
+          licence_password: this.licencePassword,
+          request: "get_product_details",
+          id_product: idProduct,
+          language: language,
+          country: country,
+          needed_attributes: JSON.stringify(neededAttributes)
+        })
+      );
+
+      curl.on("end", (statusCode: any, data: any, headers: any) => {
+        resolve(jsonFormatter(data));
       });
+
+      curl.on("error", (statusCode: any, data: any, headers: any) => {
+        terminate();
+        reject(jsonFormatter(data));
+      });
+      
+      curl.perform();
+    });
   }
 
   /**
@@ -62,26 +74,33 @@ export default class ShopObjects {
    */
   public getContentDetails(
     idContent: number,
-    language: string) {
-      return new Promise((resolve, reject) => {
-        axios
-          .post(
-            `${this.restUrl}/srv/service/`,
-            qs.stringify({
-              licence_username: this.licenceUsername,
-              licence_password: this.licencePassword,
-              request: "get_content_details",
-              id_content: idContent,
-              language: language
-            })
-          )
-          .then((resp) => {
-            resolve(jsonFormatter(resp.data));
-          })
-          .catch((err) => {
-            reject(jsonFormatter(err));
-          });
+    language: string
+  ) {
+    return new Promise((resolve, reject) => {
+      curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
+      curl.setOpt(Curl.option.POST, true);
+      curl.setOpt(
+        Curl.option.POSTFIELDS,
+        objectToQueryString({
+          licence_username: this.licenceUsername,
+          licence_password: this.licencePassword,
+          request: "get_content_details",
+          id_content: idContent,
+          language: language
+        })
+      );
+
+      curl.on("end", (statusCode: any, data: any, headers: any) => {
+        resolve(jsonFormatter(data));
       });
+
+      curl.on("error", (statusCode: any, data: any, headers: any) => {
+        terminate();
+        reject(jsonFormatter(data));
+      });
+      
+      curl.perform();
+    });
   }
 
   /**
@@ -95,27 +114,34 @@ export default class ShopObjects {
   public seoGetProductDetails(
     permalink: string,
     country: string,
-    neededAttributes: object) {
-      return new Promise((resolve, reject) => {
-        axios
-          .post(
-            `${this.restUrl}/srv/service/`,
-            qs.stringify({
-              licence_username: this.licenceUsername,
-              licence_password: this.licencePassword,
-              request: "seo_get_product_details",
-              permalink: permalink,
-              country: country,
-              needed_attributes: JSON.stringify(neededAttributes)
-            })
-          )
-          .then((resp) => {
-            resolve(jsonFormatter(resp.data));
-          })
-          .catch((err) => {
-            reject(jsonFormatter(err));
-          });
+    neededAttributes: object
+  ) {
+    return new Promise((resolve, reject) => {
+      curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
+      curl.setOpt(Curl.option.POST, true);
+      curl.setOpt(
+        Curl.option.POSTFIELDS,
+        objectToQueryString({
+          licence_username: this.licenceUsername,
+          licence_password: this.licencePassword,
+          request: "seo_get_product_details",
+          permalink: permalink,
+          country: country,
+          needed_attributes: JSON.stringify(neededAttributes)
+        })
+      );
+
+      curl.on("end", (statusCode: any, data: any, headers: any) => {
+        resolve(jsonFormatter(data));
       });
+
+      curl.on("error", (statusCode: any, data: any, headers: any) => {
+        terminate();
+        reject(jsonFormatter(data));
+      });
+      
+      curl.perform();
+    });
   }
 
   /**
@@ -124,26 +150,31 @@ export default class ShopObjects {
    * @param {string} permalink The permalink of the product.
    * @return {object}
    */
-  public seoGetContentDetails(
-    permalink: string) {
-      return new Promise((resolve, reject) => {
-        axios
-          .post(
-            `${this.restUrl}/srv/service/`,
-            qs.stringify({
-              licence_username: this.licenceUsername,
-              licence_password: this.licencePassword,
-              request: "seo_get_content_details",
-              permalink: permalink
-            })
-          )
-          .then((resp) => {
-            resolve(jsonFormatter(resp.data));
-          })
-          .catch((err) => {
-            reject(jsonFormatter(err));
-          });
+  public seoGetContentDetails(permalink: string) {
+    return new Promise((resolve, reject) => {
+      curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
+      curl.setOpt(Curl.option.POST, true);
+      curl.setOpt(
+        Curl.option.POSTFIELDS,
+        objectToQueryString({
+          licence_username: this.licenceUsername,
+          licence_password: this.licencePassword,
+          request: "seo_get_content_details",
+          permalink: permalink
+        })
+      );
+
+      curl.on("end", (statusCode: any, data: any, headers: any) => {
+        resolve(jsonFormatter(data));
       });
+
+      curl.on("error", (statusCode: any, data: any, headers: any) => {
+        terminate();
+        reject(jsonFormatter(data));
+      });
+      
+      curl.perform();
+    });
   }
 
   /**
@@ -167,32 +198,39 @@ export default class ShopObjects {
     attributes: object,
     seo: object,
     metadata: object,
-    availability: object) {
-      return new Promise((resolve, reject) => {
-        axios
-          .post(
-            `${this.restUrl}/srv/service/`,
-            qs.stringify({
-              licence_username: this.licenceUsername,
-              licence_password: this.licencePassword,
-              licence_secret_key: this.licenceSecretKey,
-              request: "create_product",
-              "class": classOfProduct,
-              name: name,
-              shop_active: shopActive,
-              attributes: attributes,
-              metadata: metadata,
-              seo: seo,
-              availability: availability
-            })
-          )
-          .then((resp) => {
-            resolve(jsonFormatter(resp.data));
-          })
-          .catch((err) => {
-            reject(jsonFormatter(err));
-          });
+    availability: object
+  ) {
+    return new Promise((resolve, reject) => {
+      curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
+      curl.setOpt(Curl.option.POST, true);
+      curl.setOpt(
+        Curl.option.POSTFIELDS,
+        objectToQueryString({
+          licence_username: this.licenceUsername,
+          licence_password: this.licencePassword,
+          licence_secret_key: this.licenceSecretKey,
+          request: "create_product",
+          "class": classOfProduct,
+          name: name,
+          shop_active: shopActive,
+          attributes: JSON.stringify(attributes),
+          metadata: JSON.stringify(metadata),
+          seo: JSON.stringify(seo),
+          availability: JSON.stringify(availability)
+        })
+      );
+
+      curl.on("end", (statusCode: any, data: any, headers: any) => {
+        resolve(jsonFormatter(data));
       });
+
+      curl.on("error", (statusCode: any, data: any, headers: any) => {
+        terminate();
+        reject(jsonFormatter(data));
+      });
+      
+      curl.perform();
+    });
   }
 
   /**
@@ -216,32 +254,39 @@ export default class ShopObjects {
     attributes: object,
     seo: object,
     metadata: object,
-    availability: object) {
-      return new Promise((resolve, reject) => {
-        axios
-          .post(
-            `${this.restUrl}/srv/service/`,
-            qs.stringify({
-              licence_username: this.licenceUsername,
-              licence_password: this.licencePassword,
-              licence_secret_key: this.licenceSecretKey,
-              request: "update_product",
-              id_product: idProduct,
-              name: name,
-              shop_active: shopActive,
-              attributes: attributes,
-              metadata: metadata,
-              seo: seo,
-              availability: availability
-            })
-          )
-          .then((resp) => {
-            resolve(jsonFormatter(resp.data));
-          })
-          .catch((err) => {
-            reject(jsonFormatter(err));
-          });
+    availability: object
+  ) {
+    return new Promise((resolve, reject) => {
+      curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
+      curl.setOpt(Curl.option.POST, true);
+      curl.setOpt(
+        Curl.option.POSTFIELDS,
+        objectToQueryString({
+          licence_username: this.licenceUsername,
+          licence_password: this.licencePassword,
+          licence_secret_key: this.licenceSecretKey,
+          request: "update_product",
+          id_product: idProduct,
+          name: name,
+          shop_active: shopActive,
+          attributes: JSON.stringify(attributes),
+          metadata: JSON.stringify(metadata),
+          seo: JSON.stringify(seo),
+          availability: JSON.stringify(availability)
+        })
+      );
+
+      curl.on("end", (statusCode: any, data: any, headers: any) => {
+        resolve(jsonFormatter(data));
       });
+
+      curl.on("error", (statusCode: any, data: any, headers: any) => {
+        terminate();
+        reject(jsonFormatter(data));
+      });
+      
+      curl.perform();
+    });
   }
 
   /**
@@ -265,32 +310,39 @@ export default class ShopObjects {
     attributes: object,
     seo: object,
     metadata: object,
-    availability: object) {
-      return new Promise((resolve, reject) => {
-        axios
-          .post(
-            `${this.restUrl}/srv/service/`,
-            qs.stringify({
-              licence_username: this.licenceUsername,
-              licence_password: this.licencePassword,
-              licence_secret_key: this.licenceSecretKey,
-              request: "update_product",
-              id_product: idProduct,
-              name: name,
-              shop_active: shopActive,
-              attributes: attributes,
-              metadata: metadata,
-              seo: seo,
-              availability: availability
-            })
-          )
-          .then((resp) => {
-            resolve(jsonFormatter(resp.data));
-          })
-          .catch((err) => {
-            reject(jsonFormatter(err));
-          });
+    availability: object
+  ) {
+    return new Promise((resolve, reject) => {
+      curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
+      curl.setOpt(Curl.option.POST, true);
+      curl.setOpt(
+        Curl.option.POSTFIELDS,
+        objectToQueryString({
+          licence_username: this.licenceUsername,
+          licence_password: this.licencePassword,
+          licence_secret_key: this.licenceSecretKey,
+          request: "update_product",
+          id_product: idProduct,
+          name: name,
+          shop_active: shopActive,
+          attributes: JSON.stringify(attributes),
+          metadata: JSON.stringify(metadata),
+          seo: JSON.stringify(seo),
+          availability: JSON.stringify(availability)
+        })
+      );
+
+      curl.on("end", (statusCode: any, data: any, headers: any) => {
+        resolve(jsonFormatter(data));
       });
+
+      curl.on("error", (statusCode: any, data: any, headers: any) => {
+        terminate();
+        reject(jsonFormatter(data));
+      });
+      
+      curl.perform();
+    });
   }
 
   /**
@@ -300,23 +352,30 @@ export default class ShopObjects {
    * @return {object}
    */
   public deleteProduct(idProduct: number) {
-      return new Promise((resolve, reject) => {
-        axios
-          .post(
-            `${this.restUrl}/srv/service/`,
-            qs.stringify({
-              licence_username: this.licenceUsername,
-              licence_password: this.licencePassword,
-              licence_secret_key: this.licenceSecretKey,
-              request: "delete_product"
-            })
-          )
-          .then((resp) => {
-            resolve(jsonFormatter(resp.data));
-          })
-          .catch((err) => {
-            reject(jsonFormatter(err));
-          });
+    return new Promise((resolve, reject) => {
+      curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
+      curl.setOpt(Curl.option.POST, true);
+      curl.setOpt(
+        Curl.option.POSTFIELDS,
+        objectToQueryString({
+          licence_username: this.licenceUsername,
+          licence_password: this.licencePassword,
+          licence_secret_key: this.licenceSecretKey,
+          request: "delete_product",
+          id_product: idProduct
+        })
+      );
+
+      curl.on("end", (statusCode: any, data: any, headers: any) => {
+        resolve(jsonFormatter(data));
       });
+
+      curl.on("error", (statusCode: any, data: any, headers: any) => {
+        terminate();
+        reject(jsonFormatter(data));
+      });
+      
+      curl.perform();
+    });
   }
 }

@@ -1,5 +1,6 @@
 import Cart from "./cart";
 import Categories from "./categories";
+import Orders from "./orders";
 import Search from "./search";
 import Sessions from "./sessions";
 import ShopObjects from "./shopobjects";
@@ -32,4 +33,5 @@ export default class SleekShop {
   public search = new Search(this);
   public cart = new Cart(this);
   public user = new User(this);
+  public orders = new Orders(this);
 }

@@ -1,5 +1,5 @@
 {
-  "name": "sleekshop-js",
+  "name": "@trefox/sleekshop-js",
   "version": "0.1.0",
   "description": "",
   "main": "dist/index.js",

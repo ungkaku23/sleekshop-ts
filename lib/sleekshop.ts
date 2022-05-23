@@ -1,10 +1,16 @@
+import Aggregation from "./aggregation";
 import Cart from "./cart";
 import Categories from "./categories";
+import Coupons from "./coupons";
 import Orders from "./orders";
+import Payment from "./payment";
 import Search from "./search";
+import Server from "./server";
 import Sessions from "./sessions";
 import ShopObjects from "./shopobjects";
 import User from "./user";
+import Warehouse from "./warehouse";
+import WebHooks from "./webhooks";
 
 /**
  * Sleekshop Client.
@@ -34,4 +40,10 @@ export default class SleekShop {
   public cart = new Cart(this);
   public user = new User(this);
   public orders = new Orders(this);
+  public payment = new Payment(this);
+  public aggregation = new Aggregation(this);
+  public coupons = new Coupons(this);
+  public server = new Server(this);
+  public warehouse = new Warehouse(this);
+  public webhooks = new WebHooks(this);
 }

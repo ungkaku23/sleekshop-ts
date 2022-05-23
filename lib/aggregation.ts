@@ -7,25 +7,27 @@ const { Curl } = require("node-libcurl");
 const curl = new Curl();
 const terminate = curl.close.bind(curl);
 
-export default class Sessions {
+export default class Aggregation {
   
   protected restUrl: string;
   protected licenceUsername: string;
   protected licencePassword: string;
+  protected licenceSecretKey: string;
 
   constructor(parentObj: any) {
     this.restUrl = parentObj.restUrl;
     this.licenceUsername = parentObj.licenceUsername;
     this.licencePassword = parentObj.licencePassword;
+    this.licenceSecretKey = parentObj.licenceSecretKey;
   }
 
   /**
-   * Delivers a new session.
+   * This request allows you to perform several tasks with only one call. You can send several requests in the pipe.
    *
-   * @param N/A
+   * @param {object} pipe A well formed array containing all requests you want to perform.
    * @return {object}
    */
-  public getNewSession() {
+  public aggregate(pipe: object) {
     return new Promise((resolve, reject) => {
       curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
       curl.setOpt(Curl.option.POST, true);
@@ -34,7 +36,8 @@ export default class Sessions {
         objectToQueryString({
           licence_username: this.licenceUsername,
           licence_password: this.licencePassword,
-          request: "get_new_session"
+          request: "aggregate",
+          pipe: JSON.stringify(pipe)
         })
       );
 

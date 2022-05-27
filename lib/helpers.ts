@@ -3,7 +3,15 @@ export function stripTrailingSlash(url: string): string {
 }
 
 export function jsonFormatter(data: string): string {
-  return JSON.parse((typeof data === 'string' ? data : JSON.stringify(data)).replace(/:,/gi, ':"",'));
+  let newStr = "";
+  if (typeof data === 'string') {
+    newStr = data.replace(/(\r\n|\n|\r)/gm, '').split(/\s/).join('').replace(/:,/gi, ':"",').replace(/:}/gi, ':""}');
+  } else {
+    newStr = JSON.stringify(data).replace(/(\r\n|\n|\r)/gm, '').split(/\s/).join('').replace(/:,/gi, ':"",').replace(/:}/gi, ':""}');
+  }
+  
+  
+  return JSON.parse(newStr);
 }
 
 export function objectToQueryString(obj: any): string {

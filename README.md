@@ -1,1 +1,1 @@
--- New Version Released : 0.1.1
+SleekShop API Library

@@ -4,8 +4,6 @@ import {
 } from "./helpers";
 
 const { Curl } = require("node-libcurl");
-const curl = new Curl();
-const terminate = curl.close.bind(curl);
 
 export default class Categories {
   
@@ -29,6 +27,9 @@ export default class Categories {
    * @return {object}
    */
   public getCategories(id: number, language: string) {
+    const curl = new Curl();
+    const terminate = curl.close.bind(curl);
+    
     return new Promise((resolve, reject) => {
       curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
       curl.setOpt(Curl.option.POST, true);
@@ -79,6 +80,9 @@ export default class Categories {
     rightLimit: number,
     neededAttributes: object
   ) {
+    const curl = new Curl();
+    const terminate = curl.close.bind(curl);
+
     return new Promise((resolve, reject) => {
       curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
       curl.setOpt(Curl.option.POST, true);
@@ -133,6 +137,9 @@ export default class Categories {
     rightLimit: number,
     neededAttributes: object
   ) {
+    const curl = new Curl();
+    const terminate = curl.close.bind(curl);
+    
     return new Promise((resolve, reject) => {
       curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
       curl.setOpt(Curl.option.POST, true);
@@ -188,6 +195,9 @@ export default class Categories {
     rightLimit: number,
     neededAttributes: object
   ) {
+    const curl = new Curl();
+    const terminate = curl.close.bind(curl);
+    
     return new Promise((resolve, reject) => {
       curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
       curl.setOpt(Curl.option.POST, true);
@@ -244,6 +254,9 @@ export default class Categories {
     rightLimit: number,
     neededAttributes: object)
    {
+    const curl = new Curl();
+    const terminate = curl.close.bind(curl);
+
     return new Promise((resolve, reject) => {
       curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
       curl.setOpt(Curl.option.POST, true);
@@ -298,6 +311,9 @@ export default class Categories {
     rightLimit: number,
     neededAttributes: object
   ) {
+    const curl = new Curl();
+    const terminate = curl.close.bind(curl);
+
     return new Promise((resolve, reject) => {
       curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
       curl.setOpt(Curl.option.POST, true);
@@ -349,6 +365,9 @@ export default class Categories {
     rightLimit: number,
     neededAttributes: object
   ) {
+    const curl = new Curl();
+    const terminate = curl.close.bind(curl);
+
     return new Promise((resolve, reject) => {
       curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
       curl.setOpt(Curl.option.POST, true);
@@ -401,6 +420,9 @@ export default class Categories {
     rightLimit: number,
     neededAttributes: object
   ) {
+    const curl = new Curl();
+    const terminate = curl.close.bind(curl);
+
     return new Promise((resolve, reject) => {
       curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
       curl.setOpt(Curl.option.POST, true);
@@ -450,6 +472,9 @@ export default class Categories {
     attributes: object,
     seo: object
   ) {
+    const curl = new Curl();
+    const terminate = curl.close.bind(curl);
+
     return new Promise((resolve, reject) => {
       curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
       curl.setOpt(Curl.option.POST, true);
@@ -498,6 +523,9 @@ export default class Categories {
     attributes: object,
     seo: object
   ) {
+    const curl = new Curl();
+    const terminate = curl.close.bind(curl);
+
     return new Promise((resolve, reject) => {
       curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
       curl.setOpt(Curl.option.POST, true);
@@ -538,6 +566,9 @@ export default class Categories {
    * @return {object}
    */
   public deleteCategory(idCategory: number) {
+    const curl = new Curl();
+    const terminate = curl.close.bind(curl);
+
     return new Promise((resolve, reject) => {
       curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
       curl.setOpt(Curl.option.POST, true);

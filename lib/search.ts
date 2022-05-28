@@ -1,14 +1,12 @@
-import { 
+import {
   jsonFormatter,
   objectToQueryString
 } from "./helpers";
 
 const { Curl } = require("node-libcurl");
-const curl = new Curl();
-const terminate = curl.close.bind(curl);
 
 export default class Search {
-  
+
   protected restUrl: string;
   protected licenceUsername: string;
   protected licencePassword: string;
@@ -44,6 +42,9 @@ export default class Search {
     rightLimit: number,
     neededAttributes: object
   ) {
+    const curl = new Curl();
+    const terminate = curl.close.bind(curl);
+
     return new Promise((resolve, reject) => {
       curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
       curl.setOpt(Curl.option.POST, true);
@@ -72,7 +73,7 @@ export default class Search {
         terminate();
         reject(jsonFormatter(data));
       });
-      
+
       curl.perform();
     });
   }
@@ -98,6 +99,9 @@ export default class Search {
     rightLimit: number,
     neededAttributes: object
   ) {
+    const curl = new Curl();
+    const terminate = curl.close.bind(curl);
+
     return new Promise((resolve, reject) => {
       curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
       curl.setOpt(Curl.option.POST, true);
@@ -125,7 +129,7 @@ export default class Search {
         terminate();
         reject(jsonFormatter(data));
       });
-      
+
       curl.perform();
     });
   }
@@ -143,6 +147,9 @@ export default class Search {
     constraint: object,
     language: string
   ) {
+    const curl = new Curl();
+    const terminate = curl.close.bind(curl);
+
     return new Promise((resolve, reject) => {
       curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
       curl.setOpt(Curl.option.POST, true);
@@ -166,7 +173,7 @@ export default class Search {
         terminate();
         reject(jsonFormatter(data));
       });
-      
+
       curl.perform();
     });
   }
@@ -190,6 +197,9 @@ export default class Search {
     leftLimit: number,
     rightLimit: number
   ) {
+    const curl = new Curl();
+    const terminate = curl.close.bind(curl);
+
     return new Promise((resolve, reject) => {
       curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
       curl.setOpt(Curl.option.POST, true);
@@ -216,7 +226,7 @@ export default class Search {
         terminate();
         reject(jsonFormatter(data));
       });
-      
+
       curl.perform();
     });
   }
@@ -242,6 +252,9 @@ export default class Search {
     rightLimit: number,
     neededAttributes: object
   ) {
+    const curl = new Curl();
+    const terminate = curl.close.bind(curl);
+
     return new Promise((resolve, reject) => {
       curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
       curl.setOpt(Curl.option.POST, true);
@@ -269,7 +282,7 @@ export default class Search {
         terminate();
         reject(jsonFormatter(data));
       });
-      
+
       curl.perform();
     });
   }

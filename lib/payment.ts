@@ -1,14 +1,12 @@
-import { 
+import {
   jsonFormatter,
   objectToQueryString
 } from "./helpers";
 
 const { Curl } = require("node-libcurl");
-const curl = new Curl();
-const terminate = curl.close.bind(curl);
 
 export default class Payment {
-  
+
   protected restUrl: string;
   protected licenceUsername: string;
   protected licencePassword: string;
@@ -28,6 +26,9 @@ export default class Payment {
    * @return {object}
    */
   public getPaymentMethods() {
+    const curl = new Curl();
+    const terminate = curl.close.bind(curl);
+
     return new Promise((resolve, reject) => {
       curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
       curl.setOpt(Curl.option.POST, true);
@@ -48,7 +49,7 @@ export default class Payment {
         terminate();
         reject(jsonFormatter(data));
       });
-      
+
       curl.perform();
     });
   }
@@ -64,6 +65,9 @@ export default class Payment {
     idOrder: number,
     args: object
   ) {
+    const curl = new Curl();
+    const terminate = curl.close.bind(curl);
+
     return new Promise((resolve, reject) => {
       curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
       curl.setOpt(Curl.option.POST, true);
@@ -86,7 +90,7 @@ export default class Payment {
         terminate();
         reject(jsonFormatter(data));
       });
-      
+
       curl.perform();
     });
   }
@@ -102,6 +106,9 @@ export default class Payment {
     session: string,
     deliveryCosts: object
   ) {
+    const curl = new Curl();
+    const terminate = curl.close.bind(curl);
+
     return new Promise((resolve, reject) => {
       curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
       curl.setOpt(Curl.option.POST, true);
@@ -124,7 +131,7 @@ export default class Payment {
         terminate();
         reject(jsonFormatter(data));
       });
-      
+
       curl.perform();
     });
   }

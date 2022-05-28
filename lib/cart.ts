@@ -1,14 +1,12 @@
-import { 
+import {
   jsonFormatter,
   objectToQueryString
 } from "./helpers";
 
 const { Curl } = require("node-libcurl");
-const curl = new Curl();
-const terminate = curl.close.bind(curl);
 
 export default class Cart {
-  
+
   protected restUrl: string;
   protected licenceUsername: string;
   protected licencePassword: string;
@@ -50,6 +48,9 @@ export default class Cart {
     country: string,
     attributes: object
   ) {
+    const curl = new Curl();
+    const terminate = curl.close.bind(curl);
+
     return new Promise((resolve, reject) => {
       curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
       curl.setOpt(Curl.option.POST, true);
@@ -81,7 +82,7 @@ export default class Cart {
         terminate();
         reject(jsonFormatter(data));
       });
-      
+
       curl.perform();
     });
   }
@@ -97,6 +98,9 @@ export default class Cart {
     session: string,
     idElement: number
   ) {
+    const curl = new Curl();
+    const terminate = curl.close.bind(curl);
+
     return new Promise((resolve, reject) => {
       curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
       curl.setOpt(Curl.option.POST, true);
@@ -119,7 +123,7 @@ export default class Cart {
         terminate();
         reject(jsonFormatter(data));
       });
-      
+
       curl.perform();
     });
   }
@@ -135,6 +139,9 @@ export default class Cart {
     session: string,
     idElement: number
   ) {
+    const curl = new Curl();
+    const terminate = curl.close.bind(curl);
+
     return new Promise((resolve, reject) => {
       curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
       curl.setOpt(Curl.option.POST, true);
@@ -157,7 +164,7 @@ export default class Cart {
         terminate();
         reject(jsonFormatter(data));
       });
-      
+
       curl.perform();
     });
   }
@@ -169,6 +176,9 @@ export default class Cart {
    * @return {object}
    */
   public clearCart(session: string) {
+    const curl = new Curl();
+    const terminate = curl.close.bind(curl);
+
     return new Promise((resolve, reject) => {
       curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
       curl.setOpt(Curl.option.POST, true);
@@ -190,7 +200,7 @@ export default class Cart {
         terminate();
         reject(jsonFormatter(data));
       });
-      
+
       curl.perform();
     });
   }
@@ -202,6 +212,9 @@ export default class Cart {
    * @return {object}
    */
   public getCart(session: string) {
+    const curl = new Curl();
+    const terminate = curl.close.bind(curl);
+
     return new Promise((resolve, reject) => {
       curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
       curl.setOpt(Curl.option.POST, true);
@@ -223,7 +236,7 @@ export default class Cart {
         terminate();
         reject(jsonFormatter(data));
       });
-      
+
       curl.perform();
     });
   }

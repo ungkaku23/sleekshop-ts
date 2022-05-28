@@ -1,14 +1,12 @@
-import { 
+import {
   jsonFormatter,
   objectToQueryString
 } from "./helpers";
 
 const { Curl } = require("node-libcurl");
-const curl = new Curl();
-const terminate = curl.close.bind(curl);
 
 export default class ShopObjects {
-  
+
   protected restUrl: string;
   protected licenceUsername: string;
   protected licencePassword: string;
@@ -36,6 +34,9 @@ export default class ShopObjects {
     country: string,
     neededAttributes: object
   ) {
+    const curl = new Curl();
+    const terminate = curl.close.bind(curl);
+
     return new Promise((resolve, reject) => {
       curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
       curl.setOpt(Curl.option.POST, true);
@@ -60,7 +61,7 @@ export default class ShopObjects {
         terminate();
         reject(jsonFormatter(data));
       });
-      
+
       curl.perform();
     });
   }
@@ -76,6 +77,9 @@ export default class ShopObjects {
     idContent: number,
     language: string
   ) {
+    const curl = new Curl();
+    const terminate = curl.close.bind(curl);
+
     return new Promise((resolve, reject) => {
       curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
       curl.setOpt(Curl.option.POST, true);
@@ -98,7 +102,7 @@ export default class ShopObjects {
         terminate();
         reject(jsonFormatter(data));
       });
-      
+
       curl.perform();
     });
   }
@@ -116,6 +120,9 @@ export default class ShopObjects {
     country: string,
     neededAttributes: object
   ) {
+    const curl = new Curl();
+    const terminate = curl.close.bind(curl);
+
     return new Promise((resolve, reject) => {
       curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
       curl.setOpt(Curl.option.POST, true);
@@ -139,7 +146,7 @@ export default class ShopObjects {
         terminate();
         reject(jsonFormatter(data));
       });
-      
+
       curl.perform();
     });
   }
@@ -151,6 +158,9 @@ export default class ShopObjects {
    * @return {object}
    */
   public seoGetContentDetails(permalink: string) {
+    const curl = new Curl();
+    const terminate = curl.close.bind(curl);
+
     return new Promise((resolve, reject) => {
       curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
       curl.setOpt(Curl.option.POST, true);
@@ -172,7 +182,7 @@ export default class ShopObjects {
         terminate();
         reject(jsonFormatter(data));
       });
-      
+
       curl.perform();
     });
   }
@@ -200,6 +210,9 @@ export default class ShopObjects {
     metadata: object,
     availability: object
   ) {
+    const curl = new Curl();
+    const terminate = curl.close.bind(curl);
+
     return new Promise((resolve, reject) => {
       curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
       curl.setOpt(Curl.option.POST, true);
@@ -228,7 +241,7 @@ export default class ShopObjects {
         terminate();
         reject(jsonFormatter(data));
       });
-      
+
       curl.perform();
     });
   }
@@ -256,6 +269,9 @@ export default class ShopObjects {
     metadata: object,
     availability: object
   ) {
+    const curl = new Curl();
+    const terminate = curl.close.bind(curl);
+
     return new Promise((resolve, reject) => {
       curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
       curl.setOpt(Curl.option.POST, true);
@@ -284,7 +300,7 @@ export default class ShopObjects {
         terminate();
         reject(jsonFormatter(data));
       });
-      
+
       curl.perform();
     });
   }
@@ -312,6 +328,9 @@ export default class ShopObjects {
     metadata: object,
     availability: object
   ) {
+    const curl = new Curl();
+    const terminate = curl.close.bind(curl);
+
     return new Promise((resolve, reject) => {
       curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
       curl.setOpt(Curl.option.POST, true);
@@ -340,7 +359,7 @@ export default class ShopObjects {
         terminate();
         reject(jsonFormatter(data));
       });
-      
+
       curl.perform();
     });
   }
@@ -352,6 +371,9 @@ export default class ShopObjects {
    * @return {object}
    */
   public deleteProduct(idProduct: number) {
+    const curl = new Curl();
+    const terminate = curl.close.bind(curl);
+
     return new Promise((resolve, reject) => {
       curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
       curl.setOpt(Curl.option.POST, true);
@@ -374,7 +396,7 @@ export default class ShopObjects {
         terminate();
         reject(jsonFormatter(data));
       });
-      
+
       curl.perform();
     });
   }

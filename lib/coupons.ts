@@ -1,14 +1,12 @@
-import { 
+import {
   jsonFormatter,
   objectToQueryString
 } from "./helpers";
 
 const { Curl } = require("node-libcurl");
-const curl = new Curl();
-const terminate = curl.close.bind(curl);
 
 export default class Coupons {
-  
+
   protected restUrl: string;
   protected licenceUsername: string;
   protected licencePassword: string;
@@ -32,6 +30,9 @@ export default class Coupons {
     session: string,
     coupons: object
   ) {
+    const curl = new Curl();
+    const terminate = curl.close.bind(curl);
+
     return new Promise((resolve, reject) => {
       curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
       curl.setOpt(Curl.option.POST, true);
@@ -54,7 +55,7 @@ export default class Coupons {
         terminate();
         reject(jsonFormatter(data));
       });
-      
+
       curl.perform();
     });
   }
@@ -72,6 +73,9 @@ export default class Coupons {
     name: string,
     amount: number
   ) {
+    const curl = new Curl();
+    const terminate = curl.close.bind(curl);
+
     return new Promise((resolve, reject) => {
       curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
       curl.setOpt(Curl.option.POST, true);
@@ -96,7 +100,7 @@ export default class Coupons {
         terminate();
         reject(jsonFormatter(data));
       });
-      
+
       curl.perform();
     });
   }

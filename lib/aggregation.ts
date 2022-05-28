@@ -4,8 +4,6 @@ import {
 } from "./helpers";
 
 const { Curl } = require("node-libcurl");
-const curl = new Curl();
-const terminate = curl.close.bind(curl);
 
 export default class Aggregation {
   
@@ -28,6 +26,9 @@ export default class Aggregation {
    * @return {object}
    */
   public aggregate(pipe: object) {
+    const curl = new Curl();
+    const terminate = curl.close.bind(curl);
+    
     return new Promise((resolve, reject) => {
       curl.setOpt(Curl.option.URL, `${this.restUrl}/srv/service/`);
       curl.setOpt(Curl.option.POST, true);

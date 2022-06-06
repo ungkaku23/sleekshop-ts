@@ -32,7 +32,6 @@ export default class Cart {
    * @param {string} descriptionField A field where the description is stored.
    * @param {string} language A valid language - code.
    * @param {string} country A valid country - code.
-   * @param {object} attributes Additional attributes you want to be stored.
    * @return {object}
    */
   public addToCart(
@@ -45,8 +44,7 @@ export default class Cart {
     nameField: string,
     descriptionField: string,
     language: string,
-    country: string,
-    attributes: object
+    country: string
   ) {
     const curl = new Curl();
     const terminate = curl.close.bind(curl);
@@ -69,8 +67,7 @@ export default class Cart {
           name_field: nameField,
           description_field: descriptionField,
           language: language,
-          country: country,
-          attributes: JSON.stringify(attributes)
+          country: country
         })
       );
 
